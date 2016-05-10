@@ -1,4 +1,5 @@
 userApp.controller('VerifyUserController', function ($scope, userFactory, statusClassFactory) {
+  $scope.editDisable = false;
   $scope.header = 'Verify User';
   $scope.user = {email:'', vCode:''};
   $scope.loginInfo = '';
@@ -23,7 +24,10 @@ userApp.controller('VerifyUserController', function ($scope, userFactory, status
       }
       return;
     }
+    $scope.editDisable = true;
+    
     userFactory.verify($scope.user.email, $scope.user.vCode, function (data) {
+      $scope.editDisable = data.type=='success'?true:false;
       $scope.infoClass = statusClassFactory.getStatusClass(data.type);
       $scope.iconClass = statusClassFactory.getIconStatusClass(data.type);
       $scope.loginInfo = data.textMsg;

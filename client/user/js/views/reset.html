@@ -4,11 +4,23 @@
         <i ng-class="iconClass" aria-hidden="true"></i>
         User Add Status: {{loginInfo}}</div>
     <form name="resetForm">
-        <div><label>Email Id: </label><input type="email" name="email" ng-model="user.email" required></div>
-        <div><label>Old Password: </label><input type="password" name="opassword" ng-model="user.oldPassword" required ng-minlength="4"></div>
-        <div><label>New Password: </label><input type="password" name="npassword" ng-model="user.newPassword" required ng-minlength="4"></div>
-        <div><label>New Confirm Password: </label><input type="password" name="cnpassword" ng-model="user.cNPassword"  required ng-minlength="4"></div>
-        <div class="align-center"><button type="button" ng-click="reset()">Reset Password</button></div>
+        <div><label>Email Id: </label>
+            <div class="info-box" ng-show="editDisable">{{user.email}}</div>
+            <input type="email" name="email" ng-model="user.email" required ng-hide="editDisable">
+        </div>
+        <div><label>Old Password: </label>
+            <div class="info-box" ng-show="editDisable">****</div>
+            <input type="password" name="opassword" ng-model="user.oldPassword" required ng-minlength="4" ng-hide="editDisable">
+        </div>
+        <div><label>New Password: </label>
+            <div class="info-box" ng-show="editDisable">****</div>
+            <input type="password" name="npassword" ng-model="user.newPassword" required ng-minlength="4" ng-hide="editDisable">
+        </div>
+        <div><label>New Confirm Password: </label>
+            <div class="info-box" ng-show="editDisable">****</div>
+            <input type="password" name="cnpassword" ng-model="user.cNPassword"  required ng-minlength="4" ng-hide="editDisable">
+        </div>
+        <div class="align-center"><button type="button" ng-click="reset()" ng-hide="editDisable">Reset Password</button></div>
     </form>
     <div class="align-center">
         <a href="/user/#/" class="nowrap">Login</a>

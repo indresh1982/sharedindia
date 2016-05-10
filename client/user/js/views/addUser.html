@@ -4,12 +4,24 @@
         <i ng-class="iconClass" aria-hidden="true"></i>
         User Add Status: {{loginInfo}}</div>
     <form name="addForm">
-        <div><label>Name: </label><input type="text" name="name" ng-model="user.name" required></div>
-        <div><label>Email Id: </label><input type="email" name="email" ng-model="user.email" required></div>
-        <div><label>Password: </label><input type="password" name="password" ng-model="user.password" required ng-minlength="4"></div>
-        <div><label>Confirm Password: </label><input type="password" name="cpassword" ng-model="user.cPassword"  required ng-minlength="4"></div>
+        <div><label>Name: </label>
+            <div class="info-box" ng-show="editDisable">{{user.name}}</div>
+            <input type="text" name="name" ng-model="user.name" required ng-hide="editDisable">
+        </div>
+        <div><label>Email Id: </label>
+            <div class="info-box" ng-show="editDisable">{{user.email}}</div>
+            <input type="email" name="email" ng-model="user.email" required ng-hide="editDisable">
+        </div>
+        <div><label>Password: </label>
+            <div class="info-box" ng-show="editDisable">****</div>
+            <input type="password" name="password" ng-model="user.password" required ng-minlength="4" ng-hide="editDisable">
+        </div>
+        <div><label>Confirm Password: </label>
+            <div class="info-box" ng-show="editDisable">****</div>
+            <input type="password" name="cpassword" ng-model="user.cPassword"  required ng-minlength="4" ng-hide="editDisable">
+        </div>
         <div class="align-center">
-            <button type="button" ng-click="addUser()">Add User</button>
+            <button type="button" ng-click="addUser()" ng-hide="editDisable">Add User</button>
         </div>
     </form>
     <div class="align-center">

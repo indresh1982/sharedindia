@@ -53,11 +53,34 @@ module.exports = function create(options, deps) {
           callback(err, result);
         } else {
           if(result.length > 0 && result[0].verified === false) {
-            email.send(result.email,
-              '\<p\>User validation code: \<b\>' + result.verificationCode + '\<\/b\>\<\/p\>',
+            email.send(result[0].email,
+              '\<p\>User validation code: \<b\>' + result[0].verificationCode + '\<\/b\>\<\/p\>',
               callback);
           } else if(result.length > 0 && result[0].verified === true) {
             callback(null, {error:error.emailVerified}); //record is already exist and verified
+          } else {
+            callback(null, {error:error.emailNReg});
+          }
+        }
+      });
+    },
+
+    forgetPassword: function (db, criteria, callback) {
+      var projection = { };
+      var collection = db.collection(collectionName);
+      var args = {};
+      criteria = criteria || {};
+      args.email = criteria.email;
+      collection.find(args, projection).toArray(function (err, result) {
+        if(err) {
+          callback(err, result);
+        } else {
+          if(result.length > 0 && result[0].verified === false) {
+            callback(null, {error:error.emailNVerified});
+          } else if(result.length > 0 && result[0].verified === true) {
+            email.send(result[0].email,
+              '\<p\>Password: \<b\>' + result[0].password + '\<\/b\>\<\/p\>',
+              callback);
           } else {
             callback(null, {error:error.emailNReg});
           }

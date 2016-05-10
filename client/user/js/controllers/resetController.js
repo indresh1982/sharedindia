@@ -1,4 +1,5 @@
 userApp.controller('ResetController', function ($scope, userFactory, statusClassFactory) {
+  $scope.editDisable = false;
   $scope.header = 'Reset Password';
   $scope.user = {email:'', oldPassword:'', newPassword:'', cNPassword:''};
   $scope.loginInfo = '';
@@ -43,7 +44,10 @@ userApp.controller('ResetController', function ($scope, userFactory, statusClass
       $scope.loginInfo = 'New Password and confirm New Password are not matched.';
       return;
     }
+    $scope.editDisable = true;
+
     userFactory.reset($scope.user.email, $scope.user.oldPassword, $scope.user.newPassword, function (data) {
+      $scope.editDisable = data.type=='success'?true:false;
       $scope.infoClass = statusClassFactory.getStatusClass(data.type);
       $scope.iconClass = statusClassFactory.getIconStatusClass(data.type);
       $scope.loginInfo = data.textMsg;

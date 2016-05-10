@@ -39,6 +39,7 @@ apiPublic.use('/user/verify', userRoutes.verify);
 apiPublic.use('/user/resend', userRoutes.resend);
 apiPublic.use('/user/reset', userRoutes.reset);
 apiPublic.use('/user/logout', userRoutes.logout);
+apiPublic.use('/user/forget', userRoutes.foregt);
 
 
 //test protected route
