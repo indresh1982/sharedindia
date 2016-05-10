@@ -3,6 +3,7 @@
 ### Software
   * Node.js -- https://nodejs.org/en/download/
   * mongodb -- https://www.mongodb.com/download-center#community
+  * Ronomongo -- https://robomongo.org/download
 
 ## Command
 ### DB
