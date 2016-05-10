@@ -16,3 +16,6 @@
 ### Start Server
   * node server.js
 
+### URL
+  * Root: http://localhost:5555/
+  * user: http://localhost:5555/user/
