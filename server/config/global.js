@@ -14,7 +14,7 @@ config.email.auth = {
   connectionTimeout: 50000,
   auth: {
     user: 'sharedindia@gmail.com',
-    pass: 'Ramsagar_143'
+    pass: 'xxxxxxx'
   }
 };
 config.email.verifyInfo = {
