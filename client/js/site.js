@@ -1,0 +1,1 @@
+SharedGlobal.setNav();

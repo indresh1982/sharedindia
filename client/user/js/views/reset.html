@@ -1,0 +1,19 @@
+<div>
+    <h2>{{header}}</h2>
+    <div ng-class="infoClass" ng-show="loginInfo">
+        <i ng-class="iconClass" aria-hidden="true"></i>
+        User Add Status: {{loginInfo}}</div>
+    <form name="resetForm">
+        <div><label>Email Id: </label><input type="email" name="email" ng-model="user.email" required></div>
+        <div><label>Old Password: </label><input type="password" name="opassword" ng-model="user.oldPassword" required ng-minlength="4"></div>
+        <div><label>New Password: </label><input type="password" name="npassword" ng-model="user.newPassword" required ng-minlength="4"></div>
+        <div><label>New Confirm Password: </label><input type="password" name="cnpassword" ng-model="user.cNPassword"  required ng-minlength="4"></div>
+        <div class="align-center"><button type="button" ng-click="reset()">Reset Password</button></div>
+    </form>
+    <div class="align-center">
+        <a href="/user/#/" class="nowrap">Login</a>
+        <a href="/user/#/add" class="nowrap">Add User</a>
+        <a href="/user/#/verify" class="nowrap">Verify User</a>
+        <a href="/user/#/forget" class="nowrap">Forget Password</a>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div>
+    <h2>{{header}}</h2>
+    <div ng-class="infoClass" ng-show="loginInfo">
+        <i ng-class="iconClass" aria-hidden="true"></i>
+        User verify Status: {{loginInfo}}</div>
+    <form name="forgetForm">
+        <div><label>Email Id: </label><input type="email" name="email" ng-model="user.email" required></div>
+        <div class="align-center"><button type="button" ng-click="forgetUser()">Forget Password</button></div>
+    </form>
+    <div class="align-center">
+        <a href="/user/#/" class="nowrap">Login</a>
+        <a href="/user/#/add" class="nowrap">Add User</a>
+        <a href="/user/#/verify" class="nowrap">Add User</a>
+        <a href="/user/#/reset" class="nowrap">Change Password</a>
+    </div>
+</div>

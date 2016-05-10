@@ -1,0 +1,8 @@
+#nav ul li.shared a:hover{
+    color: #7AB701;
+    font-weight: bolder;
+}
+#nav ul li.shared a:hover .fa-slideshare{
+    font-size: 20px;
+    transition: font 0.5s;
+}
