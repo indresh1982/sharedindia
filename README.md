@@ -4,17 +4,14 @@
   * Node.js
   * mongodb
 
-
 ## Command
 ### DB
   * Start mongodb
     'path/mongod'
   * Create Database - 'sharedindia'
 
-
 ### NPM Scripts
-  * npm install.
-
+  * npm install
 
 ### Start Server
   * node server.js
