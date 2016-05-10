@@ -58,6 +58,22 @@ module.exports = function(options, deps) {
         res.send(result);
       });
     },
+    foregt: function (req, res) {
+      if(!req.body || !req.body.email) {
+        res.send({error:error.infoMissing}); //required data missing
+        return;
+      }
+      var args = {}
+      args.email = req.body.email;
+      args.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+      repo.forgetPassword(req.db, args, function(err, result) {
+        if(err) {
+          res.send(err);
+          return;
+        }
+        res.send(result);
+      });
+    },
     reset: function (req, res) {
       if(!req.body || !req.body.email || !req.body.oldPassword || !req.body.newPassword) {
         res.send({error:error.infoMissing}); //required data missing

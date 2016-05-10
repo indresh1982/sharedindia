@@ -4,10 +4,16 @@
         <i ng-class="iconClass" aria-hidden="true"></i>
         User verify Status: {{loginInfo}}</div>
     <form name="verifyForm">
-        <div><label>Email Id: </label><input type="email" name="email" ng-model="user.email" required></div>
-        <div><label>Verification Code: </label><input type="text" name="vcode" ng-model="user.vCode" required></div>
-        <div class="align-center"><button type="button" ng-click="verifyUser()">Verify User</button>
-        <button type="button" ng-click="resendUser()">Resend Code</button></div>
+        <div><label>Email Id: </label>
+            <div class="info-box" ng-show="editDisable">{{user.email}}</div>
+            <input type="email" name="email" ng-model="user.email" required ng-hide="editDisable">
+        </div>
+        <div><label>Verification Code: </label>
+            <div class="info-box" ng-show="editDisable">{{user.vCode}}</div>
+            <input type="text" name="vcode" ng-model="user.vCode" required ng-hide="editDisable">
+        </div>
+        <div class="align-center"><button type="button" ng-click="verifyUser()" ng-hide="editDisable">Verify User</button>
+        <button type="button" ng-click="resendUser()" ng-hide="editDisable">Resend Code</button></div>
     </form>
     <div class="align-center">
         <a href="/user/#/" class="nowrap">Login</a>
