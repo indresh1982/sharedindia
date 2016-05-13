@@ -1,155 +1,93 @@
 var userRepository = require('./userRepository');
 var loginRepository = require('./loginRepository');
-var error = require('./../../assets/errors').user.errors;
+var apiFactory = require('./../../lib/apiFactory');
 
-module.exports = function(options, deps) {
-  var repo = (deps && deps.userRepository) || userRepository();
-  var repoLogin = (deps && deps.loginRepository) || loginRepository();
+module.exports = function(options) {
+  options = options || {prefixPath:'/user/'};
+  var repo = userRepository();
+  var repoLogin = loginRepository();
 
-  return {
-    add: function (req, res) {
-      if(!req.body || !req.body.name || !req.body.email || !req.body.password) {
-        res.send({error:error.infoMissing}); //required data missing
-        return;
+  return [{
+      path: options.prefixPath + 'add',
+      handler: function (req, res) {
+        apiFactory.apiRequestHandler(
+          req, res,
+          ['name', 'email', 'password'],
+          repo.add
+        );
       }
-      var args = {}
-      args.name = req.body.name;
-      args.email = req.body.email;
-      args.password = req.body.password;
-      args.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      repo.add(req.db, args, function(err, result) {
-        if(err) {
-          res.send(err);
-          return;
-        }
-        res.send(result);
-      });
     },
-    verify: function (req, res) {
-      if(!req.body || !req.body.email || !req.body.vCode) {
-        res.send({error:error.infoMissing}); //required data missing
-        return;
+    {
+      path: options.prefixPath + 'verify',
+      handler: function (req, res) {
+        apiFactory.apiRequestHandler(
+          req, res,
+          ['email', 'vCode'],
+          repo.verifyCode
+        );
       }
-      var args = {}
-      args.email = req.body.email;
-      args.verificationCode = req.body.vCode;
-      args.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      repo.verifyCode(req.db, args, function(err, result) {
-        if(err) {
-          res.send(err);
-          return;
-        }
-        res.send(result);
-      });
     },
-    resend: function (req, res) {
-      if(!req.body || !req.body.email) {
-        res.send({error:error.infoMissing}); //required data missing
-        return;
+    {
+      path:'resend',
+      handler: function (req, res) {
+        apiFactory.apiRequestHandler(
+          req, res,
+          ['email'],
+          repo.resendCode
+        );
       }
-      var args = {}
-      args.email = req.body.email;
-      args.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      repo.resendCode(req.db, args, function(err, result) {
-        if(err) {
-          res.send(err);
-          return;
-        }
-        res.send(result);
-      });
     },
-    foregt: function (req, res) {
-      if(!req.body || !req.body.email) {
-        res.send({error:error.infoMissing}); //required data missing
-        return;
+    {
+      path:'forget',
+      handler: function (req, res) {
+        apiFactory.apiRequestHandler(
+          req, res,
+          ['email'],
+          repo.forgetPassword
+        );
       }
-      var args = {}
-      args.email = req.body.email;
-      args.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      repo.forgetPassword(req.db, args, function(err, result) {
-        if(err) {
-          res.send(err);
-          return;
-        }
-        res.send(result);
-      });
     },
-    reset: function (req, res) {
-      if(!req.body || !req.body.email || !req.body.oldPassword || !req.body.newPassword) {
-        res.send({error:error.infoMissing}); //required data missing
-        return;
+    {
+      path: options.prefixPath + 'reset',
+      handler: function (req, res) {
+        apiFactory.apiRequestHandler(
+          req, res,
+          ['email', 'oldPassword', 'newPassword'],
+          repo.resetPassword
+        );
       }
-      var args = {}
-      args.email = req.body.email;
-      args.oldPassword = req.body.oldPassword;
-      args.newPassword = req.body.newPassword;
-      args.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      repo.resetPassword(req.db, args, function(err, result) {
-        if(err) {
-          res.send(err);
-          return;
-        }
-        res.send(result);
-      });
     },
-    login: function (req, res) {
-      if(!req.body || !req.body.email || !req.body.password) {
-        res.send({error:error.infoMissing}); //required data missing
-        return;
+    {
+      path: options.prefixPath + 'login',
+      handler: function (req, res) {
+        apiFactory.apiRequestHandler(
+          req, res,
+          ['email', 'password'],
+          repo.login,
+          repoLogin.login,
+          1
+        );
       }
-      var args = {}
-      args.email = req.body.email;
-      args.password = req.body.password;
-      args.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      repo.login(req.db, args, function(err, result) {
-        if(err) {
-          res.send(err);
-          return;
-        }
-        repoLogin.login(req.db, args, function(errLogin) {
-          if(errLogin) {
-            res.send(errLogin);
-            return;
-          }
-          res.send(result);
-        });
-      });
     },
-    manage: function (req, res) {
-      if(!req.body || !req.body.email || !req.body.password || !req.body.searchEmail || !req.body.right) {
-        res.send({error:error.infoMissing}); //required data missing
-        return;
+    {
+      path: options.prefixPath + 'manage',
+      handler: function (req, res) {
+        apiFactory.apiRequestHandler(
+          req, res,
+          ['email', 'password', 'searchEmail', 'right'],
+          repo.manage
+        );
       }
-      var args = {}
-      args.email = req.body.email;
-      args.password = req.body.password;
-      args.searchEmail = req.body.searchEmail;
-      args.right = req.body.right;
-      args.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      repo.manage(req.db, args, function(err, result) {
-        if(err) {
-          res.send(err);
-          return;
-        }
-        repoLogin.login(req.db, args, function(errLogin) {
-          if(errLogin) {
-            res.send(errLogin);
-            return;
-          }
-          res.send(result);
-        });
-      });
     },
-    logout: function (req, res) {
-      var args = {}
-      args.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      repoLogin.logout(req.db, args, function(err, result) {
-        if(err) {
-          res.send(err);
-          return;
-        }
-        res.send({status:'success'});
-      });
+    {
+      path: options.prefixPath + 'logout',
+      handler: function (req, res) {
+        apiFactory.apiRequestHandler(
+          req, res,
+          [],
+          repoLogin.logout
+        );
+      }
     }
-  };
+  ];
 }

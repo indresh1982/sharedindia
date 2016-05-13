@@ -35,7 +35,7 @@ userApp.controller('LoginController', function ($scope, $location, userFactory, 
       $scope.iconClass = statusClassFactory.getIconStatusClass(result.type);
       $scope.loginInfo = result.textMsg;
       
-      if(result.data && result.data.status == 'success') {
+      if(result.data && result.type == 'success') {
         SharedGlobal.setLogin(result.data.data);
         var redirect = SharedGlobal.getRedirect();
         if(!redirect.eUserType || redirect.eUserType <= result.data.data.type) {

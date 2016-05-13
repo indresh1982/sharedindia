@@ -1,6 +1,7 @@
 var express = require('express');
 var config = require('./server/config');
 var mongodb = require('./server/lib/mongodb');
+var routesFactory = require('./server/lib/routesFactory');
 var bodyParser = require('body-parser');
 var app = express();
 var apiPublic = express.Router();
@@ -32,15 +33,7 @@ app.use('/api/protected', apiProtected);
 apiPublic.use('/test', function (req, res) {
   res.send({result: 'test public route'});
 });
-var userRoutes = require('./server/routes/user/userRoutes')();
-apiPublic.use('/user/login', userRoutes.login);
-apiPublic.use('/user/add', userRoutes.add);
-apiPublic.use('/user/verify', userRoutes.verify);
-apiPublic.use('/user/resend', userRoutes.resend);
-apiPublic.use('/user/reset', userRoutes.reset);
-apiPublic.use('/user/logout', userRoutes.logout);
-apiPublic.use('/user/forget', userRoutes.foregt);
-apiPublic.use('/user/manage', userRoutes.manage);
+routesFactory.setRoutes(apiPublic, require('./server/routes/user/userRoutes')());
 
 
 //test protected route
