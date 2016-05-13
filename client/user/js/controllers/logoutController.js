@@ -12,8 +12,9 @@ userApp.controller('LogoutController', function ($scope, userFactory, statusClas
       $scope.infoClass = statusClassFactory.getStatusClass(result.type);
       $scope.iconClass = statusClassFactory.getIconStatusClass(result.type);
       $scope.loginInfo = result.textMsg;
-      if(result.data && result.data.status == 'success') {
+      if(result.data && result.type == 'success') {
         SharedGlobal.logout();
+        SharedGlobal.setNav();
       }
     });
   };

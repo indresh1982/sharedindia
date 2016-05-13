@@ -1,11 +1,15 @@
 module.exports = {
-  user: {
+  global: {
     errors: {
       infoMissing: {
         code: 201,
         type: 'error',
         textMsg: 'Information Missing!!!'
-      },
+      }
+    }
+  },
+  user: {
+    errors: {
       emailNVerified: {
         code: 202,
         type: 'warn',

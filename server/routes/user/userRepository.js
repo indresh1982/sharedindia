@@ -1,8 +1,7 @@
-var mongo = require('mongodb');
 var email = require('./../../lib/email');
 var error = require('./../../assets/errors').user.errors;
 
-module.exports = function create(options, deps) {
+module.exports = function() {
   var collectionName = 'users';
 
   return {
@@ -25,7 +24,7 @@ module.exports = function create(options, deps) {
             args.password = criteria.password;
             args.ip = criteria.ip;
             args.type = 0;
-            args.verificationCode = Math.floor((Math.random() * 999999) + 100000).toString();
+            args.vCode = Math.floor((Math.random() * 999999) + 100000).toString();
             args.verified = false;
             args.cDate = new Date();
             collection.insert(args, function (error, result) {
@@ -89,12 +88,11 @@ module.exports = function create(options, deps) {
     },
 
     verifyCode: function (db, criteria, callback) {
-      var projection = { };
       var collection = db.collection(collectionName);
       var args = {};
       criteria = criteria || {};
       args.email = criteria.email;
-      args.verificationCode = criteria.verificationCode
+      args.vCode = criteria.vCode;
       collection.update(args, {$set: {verified:true}}, {}, function (err, resData) {
         if(err) {
           callback(err, resData);
@@ -111,7 +109,6 @@ module.exports = function create(options, deps) {
     },
 
     resetPassword: function (db, criteria, callback) {
-      var projection = { };
       var collection = db.collection(collectionName);
       var args = {};
       criteria = criteria || {};
