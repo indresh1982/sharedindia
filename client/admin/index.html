@@ -3,8 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+    <link href="./../css/default.css" type="text/css" rel="stylesheet">
+    <link href="./../css/site.css" type="text/css" rel="stylesheet">
+    <link href="./../css/button.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-
+<header id="header">
+    <div id="top-header">
+        <div class="header-content">
+            <nav id="nav">
+                <ul>
+                    <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                    <li><a href="/search/"><i class="fa fa-search" aria-hidden="true"></i> Search Shared</a></li>
+                    <li class="shared"><a href="/shared/"><i class="fa fa-slideshare green-color" aria-hidden="true"></i> Add Share</a></li>
+                    <li id="navLogin"><a href="/user/"><i class="fa fa-user" aria-hidden="true"></i> Login</a></li>
+                    <li id="navLogout" class="hide"><a href="/user/#/logout"><i class="fa fa-user" aria-hidden="true"></i> Logout</a></li>
+                    <li><a href="/contact/"><i class="fa fa-envelope" aria-hidden="true"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div id="bottom-header">
+        <div class="header-content">
+            <div class="profile-text">
+                <h1>Shared <i class="fa fa-slideshare green-color" aria-hidden="true"></i> India</h1>
+                <h3>Lets share!!!</h3>
+            </div>
+            <a href="/"><img src="./../images/logo.png" class="profile-img"></a>
+        </div>
+    </div>
+</header>
+<div class="content-wrapper">
+    <div class="content">
+        <div>
+            <a href="/user/" class="nowrap">Login Again</a>
+            <a href="/user/#/manage/" class="nowrap">Manage User</a>
+            <a href="/locations/" class="nowrap">Location</a>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div id="top-footer">
+        <div id="top-footer-content">
+            <i class="fa fa-ban red-color" aria-hidden="true"></i><i class="fa fa-copyright red-color" aria-hidden="true"></i>
+            No Copyright!!! Please come together and make India Great!!!
+        </div>
+    </div>
+    <div id="bottom-footer">
+        <p>साईं इतना दीजिये, जा में कुटुंब समाय... मैं भी भूखा न रहू, साधू न भूखा जाये.</p>
+    </div>
+</footer>
+<script src="./../js/lib/cookies.js"></script>
+<script src="./../js/lib/global.js"></script>
+<script>
+    SharedGlobal.checkAdminRight('/admin/', 5);
+</script>
 </body>
 </html>

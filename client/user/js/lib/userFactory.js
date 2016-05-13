@@ -49,7 +49,14 @@ userApp.factory('userFactory', ['$http', function($http) {
       callBack);
   };
 
-  function apiCall(urlPostfix, paramData, successMsg, callBack){
+  var mangeUser = function (email, password, searchEmail, right, callBack) {
+    apiCall('manage',
+      {email:email, password:password, searchEmail:searchEmail, right:right},
+      'User changes are successful!!!',
+      callBack);
+  };
+
+  function apiCall(urlPostfix, paramData, successMsg, callBack) {
     $http({
       method: "POST",
       url: "/api/public/user/" + urlPostfix,
@@ -68,5 +75,5 @@ userApp.factory('userFactory', ['$http', function($http) {
   return {login:login, add:addUser,
     verify:verifyUser, resend:resendUser,
     forget:forgetUser, reset:resetUser,
-    logout:logoutUser};
+    logout:logoutUser, mange:mangeUser};
 }]);
