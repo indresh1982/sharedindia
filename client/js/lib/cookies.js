@@ -9,6 +9,22 @@ SharedGlobal.setLogin = function (data) {
 SharedGlobal.logout = function () {
   localStorage.setItem('auth', null);
 };
+SharedGlobal.getRedirect = function () {
+  var redirect = JSON.parse(localStorage.getItem('redirect'));
+  if(redirect){
+    return redirect;
+  } else {
+    return {url:'/'};
+  }
+};
+SharedGlobal.setRedirect = function (url, eUserType) {
+  localStorage.setItem('redirect', JSON.stringify({url:url, eUserType:eUserType}));
+};
+SharedGlobal.clearRedirect = function () {
+  localStorage.setItem('redirect', null);
+};
+
+
 SharedGlobal.writeCookies = function (key, data, exdays) {
   var d = new Date();
   d.setTime(d.getTime() + (exdays*24*60*60*1000));

@@ -25,6 +25,10 @@ userApp.config(function ($routeProvider) {
       controller: 'LogoutController',
       templateUrl:'js/views/logout.html'
     })
+    .when('/manage',{
+      controller: 'ManageController',
+      templateUrl:'js/views/manage.html'
+    })
     .otherwise({redirectTo:'/'})
 });
 

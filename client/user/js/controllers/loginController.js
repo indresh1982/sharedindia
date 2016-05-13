@@ -28,17 +28,25 @@ userApp.controller('LoginController', function ($scope, $location, userFactory, 
       }
       return;
     }
+    $scope.infoClass = statusClassFactory.getStatusClass('');
+    $scope.iconClass = statusClassFactory.getIconStatusClass('');
     userFactory.login($scope.user.id, $scope.user.password, function (result) {
       $scope.infoClass = statusClassFactory.getStatusClass(result.type);
-      $scope.iconClass = statusClassFactory.getStatusClass(result.type);
+      $scope.iconClass = statusClassFactory.getIconStatusClass(result.type);
       $scope.loginInfo = result.textMsg;
       
       if(result.data && result.data.status == 'success') {
         SharedGlobal.setLogin(result.data.data);
-        window.location = '/';
+        var redirect = SharedGlobal.getRedirect();
+        if(!redirect.eUserType || redirect.eUserType <= result.data.data.type) {
+          SharedGlobal.clearRedirect();
+          window.location = redirect.url;
+        } else {
+          $scope.infoClass = statusClassFactory.getStatusClass('error');
+          $scope.iconClass = statusClassFactory.getIconStatusClass('error');
+          $scope.loginInfo = 'User Doesn\'t have sufficient right';
+        }
       }
     });
-    $scope.infoClass = statusClassFactory.getStatusClass('');
-    $scope.iconClass = statusClassFactory.getIconStatusClass('');
   }
 });

@@ -115,6 +115,31 @@ module.exports = function(options, deps) {
         });
       });
     },
+    manage: function (req, res) {
+      if(!req.body || !req.body.email || !req.body.password || !req.body.searchEmail || !req.body.right) {
+        res.send({error:error.infoMissing}); //required data missing
+        return;
+      }
+      var args = {}
+      args.email = req.body.email;
+      args.password = req.body.password;
+      args.searchEmail = req.body.searchEmail;
+      args.right = req.body.right;
+      args.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+      repo.manage(req.db, args, function(err, result) {
+        if(err) {
+          res.send(err);
+          return;
+        }
+        repoLogin.login(req.db, args, function(errLogin) {
+          if(errLogin) {
+            res.send(errLogin);
+            return;
+          }
+          res.send(result);
+        });
+      });
+    },
     logout: function (req, res) {
       var args = {}
       args.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;

@@ -40,6 +40,16 @@ module.exports = {
         code: 207,
         type: 'warn',
         textMsg: 'Old and New Password are matched!!!'
+      },
+      searchEmailNReg: {
+        code: 208,
+        type: 'Error',
+        textMsg: 'Search Email is not register!!! Please go to add user page.'
+      },
+      insufficientRight: {
+        code: 401,
+        type: 'error',
+        textMsg: 'User Doesn\'t have sufficient right!!!'
       }
     }
   }

@@ -152,6 +152,55 @@ module.exports = function create(options, deps) {
           }
         }
       });
+    },
+    manage: function (db, criteria, callback) {
+      var projection = { name:1, email:1, type:1, verified:1 };
+      var collection = db.collection(collectionName);
+      var args = {};
+      criteria = criteria || {};
+      args.email = criteria.email;
+      args.password = criteria.password;
+      collection.find(args, projection).toArray(function (err, result) {
+        if(err) {
+          callback(err, result);
+        } else {
+          if(result.length > 0 && result[0].verified === false) {
+            callback(null, {error:error.emailNVerified});
+          } else if(result.length > 0 && result[0].verified === true) {
+            if(criteria.right <= result[0].type) {
+              collection.find({email:criteria.searchEmail}, projection).toArray(function (searchErr, searchResult) {
+                if(searchErr) {
+                  callback(searchErr, searchResult);
+                } else {
+                  if(result.length > 0) {
+                    if (result[0].type >= searchResult[0].type) {
+                      collection.update({email:criteria.searchEmail}, {$set: {type: criteria.right}}, {}, function (updateErr, resUpdate) {
+                        if (updateErr) {
+                          callback(updateErr, resUpdate);
+                        } else {
+                          if (resUpdate.result.n == 1) {
+                            callback(null, {status: 'success'});
+                          } else {
+                            callback(null, {error:error.searchEmailNReg});
+                          }
+                        }
+                      });
+                    } else {
+                      callback(null, {error: error.insufficientRight});
+                    }
+                  } else {
+                    callback(null, {error:error.searchEmailNReg});
+                  }
+                }
+              });
+            } else {
+              callback(null, {error:error.insufficientRight});
+            }
+          } else {
+            callback(null, {error:error.emailNReg});
+          }
+        }
+      });
     }
   }
 };
