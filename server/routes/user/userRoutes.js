@@ -28,7 +28,7 @@ module.exports = function(options) {
       }
     },
     {
-      path:'resend',
+      path: options.prefixPath + 'resend',
       handler: function (req, res) {
         apiFactory.apiRequestHandler(
           req, res,
@@ -38,7 +38,7 @@ module.exports = function(options) {
       }
     },
     {
-      path:'forget',
+      path: options.prefixPath + 'forget',
       handler: function (req, res) {
         apiFactory.apiRequestHandler(
           req, res,

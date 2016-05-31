@@ -4,6 +4,9 @@ userApp.controller('ManageController', function ($scope, $location, userFactory,
   $scope.loginInfo = '';
   $scope.infoClass = '';
   $scope.iconClass = '';
+  $scope.isLoading = false;
+  $scope.editDisable = false;
+
   var userType = SharedGlobal.getLogin().type;
   var rightOptions = [{id:0}];
   for(var i=1; i<=userType; i++){
@@ -47,13 +50,18 @@ userApp.controller('ManageController', function ($scope, $location, userFactory,
       }
       return;
     }
+    $scope.loginInfo = null;
     $scope.infoClass = statusClassFactory.getStatusClass('');
     $scope.iconClass = statusClassFactory.getIconStatusClass('');
+    $scope.isLoading = true;
+    $scope.editDisable = true;
 
     userFactory.mange($scope.user.email, $scope.user.password, $scope.user.searchEmail, $scope.user.right, function (result) {
       $scope.infoClass = statusClassFactory.getStatusClass(result.type);
       $scope.iconClass = statusClassFactory.getIconStatusClass(result.type);
       $scope.loginInfo = result.textMsg
+      $scope.isLoading = false;
+      $scope.editDisable = false;
     });
   }
 });

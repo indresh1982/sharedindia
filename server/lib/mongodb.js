@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-var config = require('./../config/dev');
+var config = require('./../config');
 
 // Singleton
 var Singleton = {

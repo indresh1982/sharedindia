@@ -149,3 +149,6 @@ input[type=text], input[type=password],input[type=email], textarea, select {
     margin-bottom: 15px;
     background-color: white;
 }
+.fa-spinner {
+    margin: 20px;
+}

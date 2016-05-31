@@ -4,6 +4,6 @@ var config = require('./global');
 config.mongo.uri="mongodb://webdev:webdev@ds019471.mlab.com:19471/sharedindia";
 config.mongo.db = "sharedindia";
 
-config.email.sendAllow = false;
+config.email.sendAllow = true;
 
 module.exports = config;

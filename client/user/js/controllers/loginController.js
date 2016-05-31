@@ -3,6 +3,8 @@ userApp.controller('LoginController', function ($scope, $location, userFactory, 
   $scope.loginInfo = '';
   $scope.infoClass = '';
   $scope.iconClass = '';
+  $scope.isLoading = false;
+  $scope.editDisable = false;
 
   $scope.user = {id:'', password:''};
   
@@ -28,8 +30,12 @@ userApp.controller('LoginController', function ($scope, $location, userFactory, 
       }
       return;
     }
+    $scope.loginInfo = null;
     $scope.infoClass = statusClassFactory.getStatusClass('');
     $scope.iconClass = statusClassFactory.getIconStatusClass('');
+    $scope.isLoading = true;
+    $scope.editDisable = true;
+
     userFactory.login($scope.user.id, $scope.user.password, function (result) {
       $scope.infoClass = statusClassFactory.getStatusClass(result.type);
       $scope.iconClass = statusClassFactory.getIconStatusClass(result.type);
@@ -42,6 +48,8 @@ userApp.controller('LoginController', function ($scope, $location, userFactory, 
           SharedGlobal.clearRedirect();
           window.location = redirect.url;
         } else {
+          $scope.isLoading = false;
+          $scope.editDisable = false;
           $scope.infoClass = statusClassFactory.getStatusClass('error');
           $scope.iconClass = statusClassFactory.getIconStatusClass('error');
           $scope.loginInfo = 'User Doesn\'t have sufficient right';

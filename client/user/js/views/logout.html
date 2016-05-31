@@ -3,7 +3,10 @@
     <div ng-class="infoClass" ng-show="loginInfo">
         <i ng-class="iconClass" aria-hidden="true"></i>
         User verify Status: {{loginInfo}}</div>
-    <div class="align-center"><button type="button" ng-click="goToHome()">Home</button></div>
+    <div class="align-center">
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw" ng-show="isLoading"></i>
+        <button type="button" ng-click="goToHome()" ng-hide="isLoading">Home</button>
+    </div>
     <div class="align-center">
         <a href="/user/#/" class="nowrap">Login</a>
         <a href="/user/#/add" class="nowrap">Add User</a>
