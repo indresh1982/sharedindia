@@ -3,6 +3,7 @@ userApp.controller('LogoutController', function ($scope, userFactory, statusClas
   $scope.loginInfo = '';
   $scope.infoClass = '';
   $scope.iconClass = '';
+  $scope.isLoading = true;
 
   $scope.goToHome = function () {
     window.location = '/';
@@ -15,6 +16,7 @@ userApp.controller('LogoutController', function ($scope, userFactory, statusClas
       if(result.data && result.type == 'success') {
         SharedGlobal.logout();
         SharedGlobal.setNav();
+        $scope.isLoading = false;
       }
     });
   };

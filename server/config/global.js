@@ -7,6 +7,7 @@ config.bodyParser = {};
 config.bodyParser.uploadLimit = '1mb';
 
 config.email = {};
+config.email.sendAllow = true;
 config.email.auth = {
   host: 'smtp.gmail.com',
   port: 465,

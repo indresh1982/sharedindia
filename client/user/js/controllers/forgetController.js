@@ -4,6 +4,8 @@ userApp.controller('ForgetController', function ($scope, userFactory, statusClas
   $scope.loginInfo = '';
   $scope.infoClass = '';
   $scope.iconClass = '';
+  $scope.isLoading = false;
+  $scope.editDisable = false;
 
   $scope.forgetUser = function () {
     $scope.infoClass = statusClassFactory.getStatusClass('error');
@@ -17,12 +19,18 @@ userApp.controller('ForgetController', function ($scope, userFactory, statusClas
       }
       return;
     }
+    $scope.loginInfo = null;
+    $scope.infoClass = statusClassFactory.getStatusClass('');
+    $scope.iconClass = statusClassFactory.getIconStatusClass('');
+    $scope.isLoading = true;
+    $scope.editDisable = true;
+
     userFactory.forget($scope.user.email, function (data) {
       $scope.infoClass = statusClassFactory.getStatusClass(data.type);
       $scope.iconClass = statusClassFactory.getIconStatusClass(data.type);
       $scope.loginInfo = data.textMsg;
+      $scope.isLoading = false;
+      $scope.editDisable = false;
     });
-    $scope.infoClass = statusClassFactory.getStatusClass('');
-    $scope.iconClass = statusClassFactory.getIconStatusClass('');
   }
 });

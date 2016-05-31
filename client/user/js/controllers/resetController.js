@@ -1,5 +1,6 @@
 userApp.controller('ResetController', function ($scope, userFactory, statusClassFactory) {
   $scope.editDisable = false;
+  $scope.isLoading = false;
   $scope.header = 'Reset Password';
   $scope.user = {email:'', oldPassword:'', newPassword:'', cNPassword:''};
   $scope.loginInfo = '';
@@ -45,14 +46,17 @@ userApp.controller('ResetController', function ($scope, userFactory, statusClass
       return;
     }
     $scope.editDisable = true;
+    $scope.isLoading = true;
+    $scope.loginInfo = null;
+    $scope.infoClass = statusClassFactory.getStatusClass('');
+    $scope.iconClass = statusClassFactory.getIconStatusClass('');
 
     userFactory.reset($scope.user.email, $scope.user.oldPassword, $scope.user.newPassword, function (data) {
       $scope.editDisable = data.type=='success'?true:false;
+      $scope.isLoading = false;
       $scope.infoClass = statusClassFactory.getStatusClass(data.type);
       $scope.iconClass = statusClassFactory.getIconStatusClass(data.type);
       $scope.loginInfo = data.textMsg;
     });
-    $scope.infoClass = statusClassFactory.getStatusClass('');
-    $scope.iconClass = statusClassFactory.getIconStatusClass('');
   }
 });

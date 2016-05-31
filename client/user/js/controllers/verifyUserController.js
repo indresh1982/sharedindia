@@ -1,5 +1,6 @@
 userApp.controller('VerifyUserController', function ($scope, userFactory, statusClassFactory) {
   $scope.editDisable = false;
+  $scope.isLoading = false;
   $scope.header = 'Verify User';
   $scope.user = {email:'', vCode:''};
   $scope.loginInfo = '';
@@ -25,9 +26,11 @@ userApp.controller('VerifyUserController', function ($scope, userFactory, status
       return;
     }
     $scope.editDisable = true;
-    
+    $scope.isLoading = true;
+
     userFactory.verify($scope.user.email, $scope.user.vCode, function (data) {
       $scope.editDisable = data.type=='success'?true:false;
+      $scope.isLoading = false;
       $scope.infoClass = statusClassFactory.getStatusClass(data.type);
       $scope.iconClass = statusClassFactory.getIconStatusClass(data.type);
       $scope.loginInfo = data.textMsg;
@@ -45,12 +48,16 @@ userApp.controller('VerifyUserController', function ($scope, userFactory, status
       }
       return;
     }
+    $scope.loginInfo = null;
+    $scope.infoClass = statusClassFactory.getStatusClass('');
+    $scope.iconClass = statusClassFactory.getIconStatusClass('');
+    $scope.isLoading = true;
+
     userFactory.resend($scope.user.email, function (data) {
       $scope.infoClass = statusClassFactory.getStatusClass(data.type);
       $scope.iconClass = statusClassFactory.getIconStatusClass(data.type);
       $scope.loginInfo = data.textMsg;
+      $scope.isLoading = false;
     });
-    $scope.infoClass = statusClassFactory.getStatusClass('');
-    $scope.iconClass = statusClassFactory.getIconStatusClass('');
   }
 });

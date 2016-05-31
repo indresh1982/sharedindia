@@ -56,5 +56,24 @@ module.exports = {
         textMsg: 'User Doesn\'t have sufficient right!!!'
       }
     }
+  },
+  location: {
+    errors: {
+      cityMissing: {
+        code: 209,
+        type: 'error',
+        textMsg: 'City Missing!!!'
+      },
+      distMissing: {
+        code: 210,
+        type: 'error',
+        textMsg: 'District Missing!!!'
+      },
+      stateMissing: {
+        code: 211,
+        type: 'error',
+        textMsg: 'State Missing!!!'
+      }
+    }
   }
 };

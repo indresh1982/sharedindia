@@ -1,0 +1,49 @@
+<div>
+    <h2>{{header}}</h2>
+    <div ng-class="infoClass" ng-show="loginInfo">
+        <i ng-class="iconClass" aria-hidden="true"></i>
+        Location Add Status: {{loginInfo}}</div>
+    <form name="addForm">
+        <div><label>Name: </label>
+            <div class="info-box" ng-show="editDisable">{{location.name}}</div>
+            <input type="text" name="name" ng-model="location.name" required ng-hide="editDisable">
+        </div>
+        <div><label>Location Type: </label>
+            <div class="info-box" ng-show="editDisable">{{location.type}}</div>
+            <select name="type" ng-model="location.type" required ng-hide="editDisable">
+                <option ng-repeat="option in typeList" value="{{option.id}}">{{option.name}}</option>
+            </select>
+        </div>
+        <div><label>State: </label>
+            <div class="info-box" ng-show="editDisable">{{location.pState}}</div>
+            <input type="text" name="pState" ng-model="location.state" required ng-hide="editDisable">
+        </div>
+        <div><label>District: </label>
+            <div class="info-box" ng-show="editDisable">{{location.pDist}}</div>
+            <input type="text" name="pDist" ng-model="location.pDist" required ng-hide="editDisable">
+        </div>
+        <div><label>City: </label>
+            <div class="info-box" ng-show="editDisable">{{location.pCity}}</div>
+            <input type="text" name="pCity" ng-model="location.pCity" required ng-hide="editDisable">
+        </div>
+        <div><label>Latitude: </label>
+            <div class="info-box" ng-show="editDisable">{{location.latitude}}</div>
+            <input type="text" name="latitude" ng-model="location.latitude" required ng-hide="editDisable" ng-pattern="regEx.geo">
+        </div>
+        <div><label>Longitude: </label>
+            <div class="info-box" ng-show="editDisable">{{location.longitude}}</div>
+            <input type="text" name="longitude" ng-model="location.longitude" required ng-hide="editDisable" ng-pattern="regEx.geo">
+        </div>
+        <div class="align-center">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw" ng-show="isLoading"></i>
+            <button type="button" ng-click="add()" ng-hide="editDisable">Add Location</button>
+        </div>
+    </form>
+    <div class="align-center">
+        <a href="/locations/#/" class="nowrap">Add Location</a>
+        <a href="/locations/#/search" class="nowrap">Search</a>
+        <a href="/locations/#/location" class="nowrap">Tree View</a>
+        <a href="/locations/#/modify" class="nowrap">Modify</a>
+        <a href="/locations/#/delete" class="nowrap">Delete</a>
+    </div>
+</div>

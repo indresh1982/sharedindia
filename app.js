@@ -34,11 +34,13 @@ apiPublic.use('/test', function (req, res) {
   res.send({result: 'test public route'});
 });
 routesFactory.setRoutes(apiPublic, require('./server/routes/user/userRoutes')());
+routesFactory.setRoutes(apiPublic, require('./server/routes/location/locPublicRoutes')());
 
 
 //test protected route
 apiProtected.use('/test', function (req, res) {
   res.send({result: 'test protected route'});
 });
+routesFactory.setRoutes(apiProtected, require('./server/routes/location/locRepository')());
 
 module.exports = app;

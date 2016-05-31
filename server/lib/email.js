@@ -8,13 +8,18 @@ module.exports = {
     var email = Object.create(config.email.verifyInfo);
     email.to = to;
     email.html = body;
-    console.log('Email is disable for dev.');
-    /* transporter.sendMail(email, function (emailError, info) {
-      if (emailError) {
-        callback(emailError, {error: error.emailFail});
-      } else { */
-        callback(null, {status: 'success'});
-      /* }
-    }); */
+    console.log('config.email.sendAllow : ', config.email.sendAllow);
+    if(config.email.sendAllow) {
+      transporter.sendMail(email, function (emailError, info) {
+        if (emailError) {
+          callback(null, {error: error.emailFail});
+        } else {
+          callback(null, {status: 'success'});
+        }
+      });
+    } else {
+      console.log('Email is disable for dev.');
+      callback(null, {status: 'success'});
+    }
   }
 };

@@ -1,5 +1,6 @@
 userApp.controller('AddUserController', function ($scope, userFactory, statusClassFactory) {
   $scope.editDisable = false;
+  $scope.isLoading = false;
   $scope.header = 'Add User';
   $scope.user = {email:'', password:'', cPassword:''};
   $scope.loginInfo = '';
@@ -38,15 +39,17 @@ userApp.controller('AddUserController', function ($scope, userFactory, statusCla
       return;
     }
     $scope.editDisable = true;
+    $scope.loginInfo = null;
+    $scope.infoClass = statusClassFactory.getStatusClass('');
+    $scope.iconClass = statusClassFactory.getIconStatusClass('');
+    $scope.isLoading = true;
 
     userFactory.add($scope.user.name, $scope.user.email, $scope.user.password, function (data) {
+      $scope.isLoading = false;
       $scope.editDisable = data.type=='success'?true:false;
       $scope.infoClass = statusClassFactory.getStatusClass(data.type);
       $scope.iconClass = statusClassFactory.getIconStatusClass(data.type);
       $scope.loginInfo = data.textMsg;
     });
-
-    $scope.infoClass = statusClassFactory.getStatusClass('');
-    $scope.iconClass = statusClassFactory.getIconStatusClass('');
   }
 });
